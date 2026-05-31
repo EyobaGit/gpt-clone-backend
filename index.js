@@ -48,13 +48,13 @@ async function startServer() {
     connection.release();
     console.log("Db connected");
 
-    const PORT = process.env.PORT || 3777;
+    const PORT = process.env.PORT || 5000;
 
     app.listen(PORT, (err) => {
       if (err) {
         throw err;
       }
-      console.log("Server is running on port http://localhost:3777");
+      console.log("Server is running on port http://localhost:5000");
     });
   } catch (error) {
     console.error("Error starting server:", error);
