@@ -1,0 +1,11 @@
+Steps how chat bot Integrate:
+
+folder structure
+
+select/build history
+save new question
+
+prompt + context
+model request
+Ai response db save
+respond to the user

@@ -1,0 +1,64 @@
+import "dotenv/config";
+import express from "express";
+import db from "./db/db.config.js";
+import fs from "fs/promises";
+import mainrouter from "./src/api/main.routes.js";
+import { errorHandler } from "./src/middleware/error-Handler.js";
+import cors from "cors";
+
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+app.use("/api", mainrouter);
+
+// // req -> middleware -> res
+
+// app.get('/', (req, res) => {
+//     console.log(req);
+//     res.send('Hello World!');
+// });
+
+// app.get('/about', (req, res) => {
+//     res.send('Hello World! from about route');
+// });
+
+// app.get('/api/chat', (req, res) => {
+//     res.send('Hello World! from chat route');
+// });
+
+// app.get('/api/conversation', (req, res) => {
+//     res.send('Hello World! from conversation route');
+// });
+
+app.get("/", (req, res) => {
+  res.send("Hello homepage!");
+});
+// app.post("/api/chat/conversations", (req, res) => {
+//   res.send("Hello World! from chat route");
+// });
+
+// app.get("/api/chat/conversations", (req, res) => {
+//   res.send("Hello World! from conversation route");
+// });
+
+async function startServer() {
+  try {
+    const connection = await db.getConnection();
+    connection.release();
+    console.log("Db connected");
+
+    const PORT = process.env.PORT || 3777;
+
+    app.listen(PORT, (err) => {
+      if (err) {
+        throw err;
+      }
+      console.log("Server is running on port http://localhost:3777");
+    });
+  } catch (error) {
+    console.error("Error starting server:", error);
+  }
+}
+app.use(errorHandler);
+startServer();
