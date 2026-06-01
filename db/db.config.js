@@ -1,6 +1,6 @@
 // import mysql from 'mysql2/promise';
 // *****************Postgress sql*********
-import { pool } from "pg";
+import { Pool } from "pg";
 
 // const { Pool } = pg;
 
