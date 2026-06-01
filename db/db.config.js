@@ -1,12 +1,26 @@
-import mysql from 'mysql2/promise';
+// import mysql from 'mysql2/promise';
+// *****************Postgress sql*********
+import pg from "pg";
 
-const db=mysql.createPool({
-    host:process.env.DB_HOST ,
-    user:process.env.DB_USER ,
-    password:process.env.DB_PASSWORD ,
-    database:process.env.DB_NAME,
-    port:process.env.DB_PORT  
-})
+const { Pool } = pg;
+
+const db = new Pool({
+  connectionString: process.env.DB_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
+});
+// *********************************************
+
+
+// const db=mysql.createPool({
+//     host:process.env.DB_HOST ,
+//     user:process.env.DB_USER ,
+//     password:process.env.DB_PASSWORD ,
+//     database:process.env.DB_NAME,
+//     port:process.env.DB_PORT, 
+//     url: process.env.DB_URL
+// })
 
 // console.log({ host:process.env.DB_HOST,
 //     user:process.env.DB_USER ,

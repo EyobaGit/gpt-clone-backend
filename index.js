@@ -1,4 +1,7 @@
 import "dotenv/config";
+import pg from "pg";
+
+const { Pool } = pg;
 import express from "express";
 import db from "./db/db.config.js";
 import fs from "fs/promises";
