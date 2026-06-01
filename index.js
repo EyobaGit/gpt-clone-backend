@@ -1,9 +1,9 @@
 import "dotenv/config";
-import pg from "pg";
+import db from "./db/db.config.js";
 
 const { Pool } = pg;
 import express from "express";
-import db from "./db/db.config.js";
+// import db from "./db/db.config.js";
 import fs from "fs/promises";
 import mainrouter from "./src/api/main.routes.js";
 import { errorHandler } from "./src/middleware/error-Handler.js";
@@ -47,8 +47,8 @@ app.get("/", (req, res) => {
 
 async function startServer() {
   try {
-    const connection = await db.getConnection();
-    connection.release();
+    const client = await db.connect();
+    client.release();
     console.log("Db connected");
 
     const PORT = process.env.PORT || 5000;
