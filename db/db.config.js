@@ -2,7 +2,7 @@
 // *****************Postgress sql*********
 
 
-const { Pool } = pg;
+// const { Pool } = pg;
 
 const db = new Pool({
   connectionString: process.env.DB_URL,
