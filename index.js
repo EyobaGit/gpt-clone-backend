@@ -11,10 +11,12 @@ import cors from "cors";
 
 const app = express();
 
-app.use(cors({
-  origin: "https://your-frontend-domain.vercel.app",
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "https://gpt-clone-tlid.vercel.app",
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use("/api", mainrouter);
 
@@ -40,13 +42,13 @@ app.use("/api", mainrouter);
 app.get("/", (req, res) => {
   res.send("Hello homepage!");
 });
-// app.post("/api/chat/conversations", (req, res) => {
-//   res.send("Hello World! from chat route");
-// });
+app.post("/api/chat/conversations", (req, res) => {
+  res.send("Hello World! from chat route");
+});
 
-// app.get("/api/chat/conversations", (req, res) => {
-//   res.send("Hello World! from conversation route");
-// });
+app.get("/api/chat/conversations", (req, res) => {
+  res.send("Hello World! from conversation route");
+});
 
 async function startServer() {
   try {
