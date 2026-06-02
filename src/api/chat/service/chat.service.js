@@ -29,11 +29,9 @@ export const getRecentConversationRows = async (limit = 5) => {
     Number.isNaN(normalizedLimit) || normalizedLimit <= 0
       ? 20
       : normalizedLimit;
-  const [rows] = await db.execute(
-    `SELECT id, role, content, created_at
-        FROM conversations
-        ORDER BY id DESC
-        LIMIT ${safeLimit}`,
+  const [rows] = await db.quiery(
+    ` "SELECT * FROM conversations WHERE id = $1",
+  [id] ORDER BY created_at DESC LIMIT ?`,
   );
   return rows.reverse();
 };
@@ -49,9 +47,9 @@ const generateAssistantAnswer = async ({ historyRows, question }) => {
     model: GEMINI_MODEL,
     history: formattedHistory,
     config: {
-        maxOutputTokens: 512,
-    }
-  }); 
+      maxOutputTokens: 512,
+    },
+  });
 
   const result = await chat.sendMessage({ message: question });
   console.log(result.text);
@@ -61,7 +59,7 @@ const generateAssistantAnswer = async ({ historyRows, question }) => {
   };
 };
 
-const getMessageById = async messageID => {
+const getMessageById = async (messageID) => {
   const [rows] = await db.execute(
     "Select id, role, content, created_at from conversations where id=? Limit 1",
     [messageID],
